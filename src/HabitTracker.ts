@@ -13,12 +13,14 @@ const PLUGIN_NAME = 'Habit Tracker 21'
   so I load an extra date in the range, but never display it in the UI */
 const DAYS_TO_SHOW = 21
 const DAYS_TO_LOAD = DAYS_TO_SHOW + 1
+const title = ''
 
 interface HabitTrackerSettings {
 	path: string
 	lastDisplayedDate: string
 	daysToShow: number
 	daysToLoad: number
+	title: string
 	rootElement: HTMLDivElement | undefined
 	habitsGoHere: HTMLDivElement | undefined
 }
@@ -28,11 +30,12 @@ const DEFAULT_SETTINGS = (): HabitTrackerSettings => ({
 	lastDisplayedDate: getTodayDate(),
 	daysToShow: DAYS_TO_SHOW,
 	daysToLoad: DAYS_TO_LOAD,
+	title: '',
 	rootElement: undefined,
 	habitsGoHere: undefined,
 })
 
-const ALLOWED_USER_SETTINGS = ['path', 'lastDisplayedDate', 'daysToShow']
+const ALLOWED_USER_SETTINGS = ['path', 'lastDisplayedDate', 'daysToShow', 'title']
 
 function getTodayDate() {
 	const today = new Date()
@@ -162,8 +165,8 @@ export default class HabitTracker {
 		})
 
 		header.createEl('div', {
-			text: '',
-			cls: 'habit-tracker__cell--name habit-tracker__cell',
+			text: this.settings.title,
+			cls: 'habit-tracker__cell--name habit-tracker__cell habit-tracker__title',
 		})
 
 		const currentDate = this.createDateFromFormat(
